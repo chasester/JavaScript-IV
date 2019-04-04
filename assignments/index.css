@@ -1,0 +1,66 @@
+h1
+{
+}
+
+body
+{
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+
+.head-container
+{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-size: 18px;
+}
+.greeting-container
+{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+.greeting
+{
+    font-weight: 550;
+    margin: 30px;
+}
+.head-container h1
+{
+    font-size: 32px;
+}
+
+.stat-item
+{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.attack-container
+{
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+}
+.horizontal-line
+{
+    border: 1px solid black;
+    width: 100%;
+}
+
+.attack
+{
+    margin: 20px;
+}
+
+.attack div
+{
+    margin: 10px 0;
+}
+

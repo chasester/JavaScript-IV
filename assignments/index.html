@@ -4,14 +4,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS III</title>
 
-  <title>JS IV</title>
-
-  <script src="prototype-refactor.js"></script>
-  <script src="lambda-classes.js"></script>
+  <!-- <script src="this.js"></script> -->
+  <script src="prototypes.js"></script>
 </head>
 
 <body>
-  <h1>JS IV - Check your work in the console!</h1>
+<h1>Click the button to start the fight</h1> 
+  <div class="container">
+    <button class="button" type="button" onclick='start()'>FIGHT</button>
+  </div>
 </body>
+<style>
+  body
+{
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+.button {
+    background-color: cadetblue; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+</style>
+
 </html>
