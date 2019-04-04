@@ -13,18 +13,18 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
-function GameObject (obj)
+class GameObject 
 {
-  this.createdAt = obj.createdAt;
-  this.myName = obj.name;
-  this.dimensions = obj.dimensions;
-  "use strict";
-  
-  this.destroy = function ()
+  constructor(obj)
+  {
+    this.createdAt = obj.createdAt;
+    this.myName = obj.name;
+    this.dimensions = obj.dimensions;
+  }
+  destroy()
   {
     return `\n ${this.myName} has Been Slain!`
   }
-  return this;
 }
 /*
   === CharacterStats ===
@@ -32,23 +32,23 @@ function GameObject (obj)
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
-CharacterStats.prototype = Object.create(GameObject);
-function CharacterStats(obj)
+class CharacterStats extends GameObject
 {
-  GameObject.call(this, obj);
-  this.healthPoints = obj.healthPoints;
-  
-  this.takeDamage = function(dam)
+  constructor(obj){
+    super(obj);
+    this.healthPoints = obj.healthPoints;
+  }
+  takeDamage(dam)
   {
     this.healthPoints -= dam;
     return `Hit: ${Math.floor(dam*100)/100} pts` + (this.healthPoints <= 0 ? this.destroy() : "");
   }
-  this.destroy = function() 
+  destroy() 
   {
-    this.takeDamage = function(dam){return `${this.myName} is dead. Don't beat a dead horse.`}
-    return `\n ${this.myName} has Been Slain!`;
+    this.takeDamage = function(dam){this.healthPoints=0; return `${this.myName} is dead. Don't beat a dead horse.`;}
+    this.healthPoints=0;
+    return super.destroy();
   }
-  return this;
 }
 
 
@@ -70,35 +70,35 @@ function CharacterStats(obj)
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-Humanoid.prototype = Object.create(CharacterStats);
-function Humanoid(obj)
+class Humanoid extends CharacterStats
 {
-  CharacterStats.call(this, obj);
-  this.team = obj.team;
-  this.weapons = obj.weapons;
-  this.language = obj.language;
-  this.greet = function()
+  constructor(obj)
+  {
+    super(obj);
+    this.team = obj.team;
+    this.weapons = obj.weapons;
+    this.language = obj.language;
+  }
+  greet()
   {
     return `<div class="greeting">${this.myName} offers a greeting in ${this.language}.</div>`
-  };
-  this.attack = function(weaponslot, victum)
+  }
+  attack(weaponslot, victum)
   {
-    if(victum.name !== "CharacterStats") { return `${this.myName} didnt know who to attack?`}; 
+    if(typeof victum !== "object") { return `${this.myName} didnt know who to attack?`}; 
     //if(typeof this.weapons !== "array") return `${this.myName} has no weapon! ${this.weapons}`; //weapon undefined
     let wep = this.weapons[weaponslot < this.weapons.length ? weaponslot : 0]
     if(!wep) return `${this.name} has no weapon! ${wep}`; //weapon undefined
     if(wep.damage.length < 2) return  `${this.myName}'s '${wep.name}' is damaged. ${wep.damage.length}`;
     return `<div>${this.myName} uses ${wep.name} on ${victum.myName}!</div><div>${victum.takeDamage(parseFloat((Math.random()*wep.damage[1]) + wep.damage[0]))}</div>`;
-  };
-  this.destroy = function()
+  }
+  destroy()
   {
     this.greet = function(){return `${this.myName} is dead! Deadmen tell not tales.`}
-    this.takeDamage = function(dam){return `${this.myName} is dead. Don't beat a dead horse.`; this.healthPoints=0;}
     this.attack = function(){return `${this.myName} is dead and cannot attack.`;};
-    this.healthPoints=0;
-    return `<div>${this.myName} has Been Slain!</div>`;//couldnt call the parent function
+    
+    return super.destroy();
   }
-  return this;
 }
 
 
